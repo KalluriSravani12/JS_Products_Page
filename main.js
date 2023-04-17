@@ -46,5 +46,39 @@ function showProduts(){
 
 
 }
+
+
+//Handle all click events
+function handleEvents(){
+    //Add event listener to entire body and listen for clicks
+    document.querySelector('body').addEventListener('click', function(event){
+        //Get the closet product-class to where we clicked
+        let productClicked = event.target.closest('.product');
+        //If you click somewhere unrelated , we just return
+        if(!productClicked){return;}
+
+
+        // Get teh info-div from the clicked product
+        let infoProduct = productClicked.querySelector('.info');
+        infoProduct.style.display = infoProduct.style.display === 'block' ? 'none' : 'block';
+
+        // If the closet element is the remove button
+        let removeButton = event.target.closest('.remove');
+        if(removeButton){
+            //Get the attribute data-product-name
+            let productName= removeButton.getAttribute('data-product-name')
+            // Remove product by nme from array
+            products = products.filter((product) => product.name !== productName);
+            productClicked.remove();
+        }
+
+
+
+
+    });
+
+
+}
 showProduts();
+handleEvents();
 
