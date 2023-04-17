@@ -8,8 +8,6 @@ let products = [
         name: "Apple",
         description: " A red apple, sweet and tasty.",
         price: 7
-
-
     },
     {
         name: "Orange",
@@ -59,7 +57,8 @@ function handleEvents(){
 
 
         // Get teh info-div from the clicked product
-        let infoProduct = productClicked.querySelector('.info');
+       let infoProduct = productClicked.querySelector('.info');
+
         infoProduct.style.display = infoProduct.style.display === 'block' ? 'none' : 'block';
 
         // If the closet element is the remove button
@@ -71,11 +70,45 @@ function handleEvents(){
             products = products.filter((product) => product.name !== productName);
             productClicked.remove();
         }
-
-
-
-
     });
+
+        //Event listener for the add product form that listens for submit and not click
+    let addProductForm = document.querySelector('#add-product-form');
+    addProductForm.addEventListener('submit', function(event){
+         //Dont let the site reload when submit is clicked
+        event.preventDefault();
+        //Get the value from the form
+        let name= document.querySelector('#name').value;
+        let description = document.querySelector('#description').value;
+        let price = Number(document.querySelector('#price').value);
+        // Error handling , check that all fields are filled out
+        if(name && description && price){
+             //New product 
+            let newProduct = {
+                name: name,
+                description: description,
+                price: price
+            };
+
+            //Add the product to the products array
+            products.push(newProduct);
+
+            // Reset the form and show new div
+            let productsDiv = document.querySelector('.products');
+            productsDiv.innerHTML = '';
+            //Render the products again
+            showProduts();
+            console.log(products);// For debugging
+            //Reset the form
+            addProductForm.reset();
+
+        }else{
+            alert('Please fill in all fields!');
+        }
+        
+    });
+
+    
 
 
 }
